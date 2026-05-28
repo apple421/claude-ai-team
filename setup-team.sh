@@ -1,4 +1,5 @@
 #!/bin/bash
+# 실행 전 확인: claude 설치? tmux 설치?
 
 set -e
 
@@ -162,9 +163,11 @@ echo "  ✅ tmux $(tmux -V | awk '{print $2}')"
 echo "  ✅ claude $(claude --version 2>/dev/null | head -1)"
 
 echo -e "\n${YELLOW}[1/4] CLAUDE.md 설정...${NC}"
+echo "  ⚙️  역할 파일 생성 중..."
 setup_claude_md
 
 echo -e "\n${YELLOW}[2/4] TMUX 세션 & 레이아웃 구성...${NC}"
+echo "  🖥️  tmux 세션 생성 중..."
 tmux kill-session -t "$SESSION" 2>/dev/null || true
 tmux new-session -d -s "$SESSION" -x 220 -y 50
 tmux split-window -t "$SESSION:0.0" -h
@@ -187,6 +190,7 @@ tmux select-pane -t "$SESSION:0.5" -T "태양 QA·리뷰어"
 echo "  ✅ 레이아웃 구성 완료 (6 panes)"
 
 echo -e "\n${YELLOW}[3/4] Claude 병렬 실행 중...${NC}"
+echo "  🤖  에이전트 6명 동시 실행 중..."
 for pane in 0 1 2 3 4 5; do
     start_claude_in_pane "$SESSION:0.$pane" "${MEMBER_MODELS[$pane]}" "${MEMBER_ROLES[$pane]}" &
 done
@@ -194,6 +198,7 @@ wait
 echo -e "${GREEN}  ✅ 전체 실행 완료${NC}"
 
 echo -e "\n${YELLOW}[4/4] 상태 확인...${NC}"
+echo "  🔍  각 에이전트 준비 상태 점검 중..."
 sleep 3
 for pane in 0 1 2 3 4 5; do
     tmux capture-pane -t "$SESSION:0.$pane" -p 2>/dev/null | grep -q "❯" \
@@ -206,4 +211,5 @@ echo "  ╔═══════════════════════
 echo "  ║   ✅ 팀 환경 구성 완료!              ║"
 echo "  ╚══════════════════════════════════════╝"
 echo -e "${NC}"
+echo -e "${GREEN}🚀 완료! tmux attach -t team 으로 접속하세요${NC}"
 [ -t 1 ] && tmux attach -t "$SESSION"
