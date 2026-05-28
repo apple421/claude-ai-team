@@ -229,3 +229,4 @@ A. `Ctrl+B`를 누른 뒤 `D`를 누르면 세션을 종료하지 않고 빠져�
 - 각 에이전트 역할 설정: `~/.claude-roles/<이름>/CLAUDE.md`
 - 팀 세션 종료: `tmux kill-session -t team`
 - 문의 및 기여: Issues 탭을 활용해주세요
+- GitHub: https://github.com/apple421/claude-ai-team
