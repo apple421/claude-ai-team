@@ -16,3 +16,4 @@ Thumbs.db
 
 # Claude local state
 .claude/settings.local.json
+settings.local.json
