@@ -46,7 +46,9 @@ sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 npm install -g @anthropic-ai/claude-code
 ```
 
-> Node.js가 없다면 먼저 [nodejs.org](https://nodejs.org) 에서 LTS 버전을 설치하세요.
+> Node.js가 없다면 먼저 [nodejs.org](https://nodejs.org) 에서 LTS 버전을 설치하세요. (Node.js **18 이상** 필요)
+>
+> **Windows 사용자:** 직접 지원하지 않습니다. [WSL2](https://learn.microsoft.com/ko-kr/windows/wsl/install)를 설치한 뒤 Ubuntu 환경에서 진행하세요.
 
 설치가 끝나면 API 키를 등록합니다:
 
@@ -70,6 +72,8 @@ claude-code/1.x.x
 
 ```bash
 # macOS
+# Homebrew가 없다면 먼저 설치:
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install tmux
 
 # Ubuntu / Debian
@@ -98,28 +102,28 @@ chmod +x setup-team.sh
 
 `setup-team.sh`는 `team`이라는 이름의 tmux 세션을 생성하고, 6개의 pane에 에이전트를 배치한 뒤 역할 파일을 로드합니다. 완료되면 자동으로 세션에 접속됩니다.
 
-> **`.tmux.conf` 자동 적용**: 레포에 포함된 `.tmux.conf`는 마우스 스크롤, pane 크기 자동 조정 등 편의 설정을 담고 있습니다. tmux가 처음 실행될 때 자동으로 읽힙니다. tmux-resurrect 플러그인이 없어도 에러 없이 동작합니다.
+> **`.tmux.conf` 자동 적용**: `setup-team.sh`가 레포의 `.tmux.conf`를 `~/.tmux.conf`로 복사합니다. 마우스 스크롤, pane 크기 자동 조정 등 편의 설정이 포함되어 있으며, tmux-resurrect 플러그인이 없어도 에러 없이 동작합니다.
 
 **실행 결과 예시:**
 ```
-[0/4] 사전 요구사항 확인...
+[0/5] 사전 요구사항 확인...
   ✅ tmux 3.3a
   ✅ claude-code/1.x.x
 
-[1/4] 유틸리티 스크립트 설치...
+[1/5] 유틸리티 스크립트 설치...
   ✅ team-send.sh, team-resize.sh → ~/
 
-[2/4] CLAUDE.md 설정...
+[2/5] CLAUDE.md 설정...
   ✅ CLAUDE.md 설정 완료
 
-[3/4] TMUX 세션 & 레이아웃 구성...
+[3/5] TMUX 세션 & 레이아웃 구성...
   ✅ 레이아웃 구성 완료 (6 panes)
 
-[4/4] Claude 병렬 실행 중...
+[4/5] Claude 병렬 실행 중...
   🤖 에이전트 6명 동시 실행 중...
   ✅ 전체 실행 완료
 
-[5/4] 상태 확인...
+[5/5] 상태 확인...
   Pane 0 (쭌): ✅ 준비 완료
   Pane 1 (민준): ✅ 준비 완료
   Pane 2 (지훈): ✅ 준비 완료
@@ -252,6 +256,8 @@ tmux attach -t team
 
 활발한 작업 기준 시간당 대략적 범위: Sonnet 에이전트 1명당 $0.05~0.5, Opus(민준) 혼자 $0.5~2 수준. 처음엔 가벼운 작업으로 테스트해보는 걸 권장합니다.
 
+> 모델명은 Anthropic 업데이트에 따라 변경될 수 있습니다. 최신 모델명은 [console.anthropic.com](https://console.anthropic.com) 에서 확인하세요.
+
 ---
 
 ## 자주 묻는 질문 (FAQ)
@@ -268,11 +274,25 @@ A. `Ctrl+B`를 누른 뒤 `D`를 누르면 세션을 종료하지 않고 빠져�
 **Q. `tmux send-keys`로 직접 메시지를 보내면 안 되나요?**
 A. 타이밍 문제로 메시지가 중간에 잘리거나 유실될 수 있습니다. 반드시 `~/team-send.sh`를 사용하세요.
 
+**Q. `roles/` 폴더 파일을 수정했는데 적용이 안 돼요.**
+A. `setup-team.sh`를 다시 실행하세요. 역할 파일은 스크립트 실행 시 `~/.claude-roles/`에 복사됩니다.
+
+**Q. API 키를 바꾸고 싶어요 (재등록 방법).**
+A. 터미널에서 `claude` 를 실행한 뒤 `/config` 명령으로 API 키를 업데이트할 수 있습니다. 또는 `ANTHROPIC_API_KEY` 환경변수를 직접 설정해도 됩니다:
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."   # 현재 세션에만 적용
+# 영구 적용은 ~/.zshrc 또는 ~/.bashrc에 위 줄 추가
+```
+
+**Q. `~/.claude/settings.json`이 없다는 에러가 납니다.**
+A. 한 번이라도 `claude` 명령을 실행하면 자동 생성됩니다. 그 다음 `setup-team.sh`를 다시 실행하세요.
+
 ---
 
 ## 참고
 
-- 각 에이전트 역할 설정: `~/.claude-roles/<이름>/CLAUDE.md`
+- 각 에이전트 역할 설정: `~/.claude-roles/<role>/CLAUDE.md` (예: `~/.claude-roles/jun/CLAUDE.md`)
+- 역할 커스터마이징: [`roles/README.md`](roles/README.md)
 - 팀 세션 종료: `tmux kill-session -t team`
 - 문의 및 기여: Issues 탭을 활용해주세요
 - GitHub: https://github.com/apple421/claude-ai-team
