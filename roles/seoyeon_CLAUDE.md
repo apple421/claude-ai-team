@@ -19,7 +19,7 @@ superpowers:systematic-debugging
 
 ## 사용 가능한 MCP 도구
 - github: 이슈 확인, PR 생성·업데이트
-- filesystem: /Users/dongsungkim 디렉터리 접근
+- filesystem: 프로젝트 디렉터리 접근
 
 ## MCP 활용 규칙
 - PR 생성 전 반드시 테스트 통과 확인

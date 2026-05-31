@@ -19,7 +19,7 @@ superpowers:writing-plans
 
 ## 사용 가능한 MCP 도구
 - github: 이슈 생성, 마일스톤 관리
-- filesystem: /Users/dongsungkim 디렉터리 접근
+- filesystem: 프로젝트 디렉터리 접근
 
 ## MCP 활용 규칙
 - 작업 시작 시 GitHub 이슈 생성

@@ -30,13 +30,17 @@ start_claude_in_pane() {
     local workdir="$HOME/.claude-roles/$role"
     mkdir -p "$workdir"
     cat ~/.claude/CLAUDE.md.base ~/.claude/roles/${role}.md > "$workdir/CLAUDE.md"
-    cp ~/.claude/settings.json "$workdir/settings.json"
+    if [ -f ~/.claude/settings.json ]; then
+        cp ~/.claude/settings.json "$workdir/settings.json"
+    else
+        echo '{}' > "$workdir/settings.json"
+    fi
 
     local rc_flag=""
     case "$role" in
         jun)     rc_flag="--remote-control '팀장-쭌'" ;;
         minjun)  rc_flag="--remote-control '아키텍트-민준'" ;;
-        jihun)   rc_flag="--remote-control '리서쳐-지훈'" ;;
+        jihun)   rc_flag="--remote-control '리서처-지훈'" ;;
         sua)     rc_flag="--remote-control '디자이너-수아'" ;;
         seoyeon) rc_flag="--remote-control '개발자-서연'" ;;
         taeyang) rc_flag="--remote-control '리뷰어-태양'" ;;
@@ -75,7 +79,7 @@ CLAUDEEOF
 ## 팀원 역할 및 호출 방법
 반드시 ~/team-send.sh 스크립트 사용 (타이밍 문제로 직접 send-keys 금지)
 - 민준 (아키텍트): 시스템 설계, 기술 스택 → ~/team-send.sh team:0.1 "민준, 내용"
-- 지훈 (리서쳐): 기술 조사, 자료 수집 → ~/team-send.sh team:0.2 "지훈, 내용"
+- 지훈 (리서처): 기술 조사, 자료 수집 → ~/team-send.sh team:0.2 "지훈, 내용"
 - 수아 (UI/UX): 화면 설계, 디자인 → ~/team-send.sh team:0.3 "수아, 내용"
 - 서연 (개발자): 코드 작성, 구현 → ~/team-send.sh team:0.4 "서연, 내용"
 - 태양 (QA): 코드 리뷰, 테스트 → ~/team-send.sh team:0.5 "태양, 내용"
@@ -114,7 +118,7 @@ superpowers:writing-plans
 ROLEEOF
 
     cat > ~/.claude/roles/jihun.md << 'ROLEEOF'
-## 나의 역할: 지훈 (리서쳐)
+## 나의 역할: 지훈 (리서처)
 - 기술 조사, 레퍼런스 수집, 트렌드 분석
 - 완료 후: ~/team-send.sh team:0.0 "쭌, 리서치 완료: [요약]"
 
@@ -190,7 +194,7 @@ tmux set-option -t "$SESSION" pane-border-format " #{pane_title} "
 tmux set-option -t "$SESSION" allow-rename off
 tmux select-pane -t "$SESSION:0.0" -T "쭌"
 tmux select-pane -t "$SESSION:0.1" -T "민준 아키텍트"
-tmux select-pane -t "$SESSION:0.2" -T "지훈 리서쳐"
+tmux select-pane -t "$SESSION:0.2" -T "지훈 리서처"
 tmux select-pane -t "$SESSION:0.3" -T "수아 UI/UX디자이너"
 tmux select-pane -t "$SESSION:0.4" -T "서연 개발자"
 tmux select-pane -t "$SESSION:0.5" -T "태양 QA·리뷰어"

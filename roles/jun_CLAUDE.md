@@ -16,7 +16,7 @@
 ## 팀원 역할 및 호출 방법
 반드시 ~/team-send.sh 스크립트 사용 (타이밍 문제로 직접 send-keys 금지)
 - 민준 (아키텍트): 시스템 설계, 기술 스택 → ~/team-send.sh team:0.1 "민준, 내용"
-- 지훈 (리서쳐): 기술 조사, 자료 수집 → ~/team-send.sh team:0.2 "지훈, 내용"
+- 지훈 (리서처): 기술 조사, 자료 수집 → ~/team-send.sh team:0.2 "지훈, 내용"
 - 수아 (UI/UX): 화면 설계, 디자인 → ~/team-send.sh team:0.3 "수아, 내용"
 - 서연 (개발자): 코드 작성, 구현 → ~/team-send.sh team:0.4 "서연, 내용"
 - 태양 (QA): 코드 리뷰, 테스트 → ~/team-send.sh team:0.5 "태양, 내용"

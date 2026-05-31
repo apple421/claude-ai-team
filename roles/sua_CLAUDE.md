@@ -14,10 +14,10 @@
 - 완료 후: ~/team-send.sh team:0.0 "쭌, 디자인 완료: [요약]"
 
 ## 사용 가능한 MCP 도구
-- filesystem: /Users/dongsungkim 디렉터리 접근 (assets 관리)
+- filesystem: 프로젝트 디렉터리 접근 (assets 관리)
 
 ## MCP 활용 규칙
-- 디자인 파일은 ~/Projects 디렉터리에 저장
+- 디자인 파일은 프로젝트 디렉터리에 저장
 
 ## 건드리지 않는 영역
 - src/features/, src/utils/ — 서연 담당
