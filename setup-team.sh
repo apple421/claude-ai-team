@@ -115,6 +115,11 @@ ROLEEOF
 ## Superpowers 스킬
 superpowers:brainstorming
 superpowers:writing-plans
+
+## Git 규칙 (반드시 준수)
+- 커밋/푸시/PR 생성 전 반드시 쭌에게 보고 후 승인 받기
+- 승인 없이 main 브랜치에 직접 push 금지
+- 보고 방법: ~/team-send.sh team:0.0 "쭌, [작업내용] 완료 — 커밋/푸시 승인 요청"
 ROLEEOF
 
     cat > ~/.claude/roles/jihun.md << 'ROLEEOF'
@@ -125,12 +130,22 @@ ROLEEOF
 ## Superpowers 스킬
 superpowers:brainstorming
 superpowers:writing-plans
+
+## Git 규칙 (반드시 준수)
+- 커밋/푸시/PR 생성 전 반드시 쭌에게 보고 후 승인 받기
+- 승인 없이 main 브랜치에 직접 push 금지
+- 보고 방법: ~/team-send.sh team:0.0 "쭌, [작업내용] 완료 — 커밋/푸시 승인 요청"
 ROLEEOF
 
     cat > ~/.claude/roles/sua.md << 'ROLEEOF'
 ## 나의 역할: 수아 (UI/UX 디자이너)
 - 화면 설계, 컴포넌트 구조, 사용자 플로우 담당
 - 완료 후: ~/team-send.sh team:0.0 "쭌, 디자인 완료: [요약]"
+
+## Git 규칙 (반드시 준수)
+- 커밋/푸시/PR 생성 전 반드시 쭌에게 보고 후 승인 받기
+- 승인 없이 main 브랜치에 직접 push 금지
+- 보고 방법: ~/team-send.sh team:0.0 "쭌, [작업내용] 완료 — 커밋/푸시 승인 요청"
 ROLEEOF
 
     cat > ~/.claude/roles/seoyeon.md << 'ROLEEOF'
@@ -141,6 +156,11 @@ ROLEEOF
 ## Superpowers 스킬
 superpowers:test-driven-development
 superpowers:systematic-debugging
+
+## Git 규칙 (반드시 준수)
+- 커밋/푸시/PR 생성 전 반드시 쭌에게 보고 후 승인 받기
+- 승인 없이 main 브랜치에 직접 push 금지
+- 보고 방법: ~/team-send.sh team:0.0 "쭌, [작업내용] 완료 — 커밋/푸시 승인 요청"
 ROLEEOF
 
     cat > ~/.claude/roles/taeyang.md << 'ROLEEOF'
@@ -151,6 +171,11 @@ ROLEEOF
 ## Superpowers 스킬
 superpowers:code-reviewer
 superpowers:verification-before-completion
+
+## Git 규칙 (반드시 준수)
+- 커밋/푸시/PR 생성 전 반드시 쭌에게 보고 후 승인 받기
+- 승인 없이 main 브랜치에 직접 push 금지
+- 보고 방법: ~/team-send.sh team:0.0 "쭌, [작업내용] 완료 — 커밋/푸시 승인 요청"
 ROLEEOF
 
     echo "  ✅ CLAUDE.md 설정 완료"

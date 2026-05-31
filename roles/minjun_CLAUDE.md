@@ -19,7 +19,7 @@ superpowers:writing-plans
 
 ## 사용 가능한 MCP 도구
 - github: 이슈 생성, 마일스톤 관리
-- filesystem: 프로젝트 디렉터리 접근
+- filesystem: /Users/dongsungkim 디렉터리 접근
 
 ## MCP 활용 규칙
 - 작업 시작 시 GitHub 이슈 생성
@@ -29,3 +29,8 @@ superpowers:writing-plans
 - /docs/architecture.md
 - /docs/api-spec.md
 - /docs/data-model.md
+
+## Git 규칙 (반드시 준수)
+- 커밋/푸시/PR 생성 전 반드시 쭌에게 보고 후 승인 받기
+- 승인 없이 main 브랜치에 직접 push 금지
+- 보고 방법: ~/team-send.sh team:0.0 "쭌, [작업내용] 완료 — 커밋/푸시 승인 요청"

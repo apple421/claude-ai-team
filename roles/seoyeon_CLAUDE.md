@@ -19,7 +19,7 @@ superpowers:systematic-debugging
 
 ## 사용 가능한 MCP 도구
 - github: 이슈 확인, PR 생성·업데이트
-- filesystem: 프로젝트 디렉터리 접근
+- filesystem: /Users/dongsungkim 디렉터리 접근
 
 ## MCP 활용 규칙
 - PR 생성 전 반드시 테스트 통과 확인
@@ -30,3 +30,8 @@ superpowers:systematic-debugging
 - src/styles/, assets/ — 수아 담당
 - docs/ — 민준 담당
 - 충돌 발견 시 독단 해결 금지, 민준에게 보고
+
+## Git 규칙 (반드시 준수)
+- 커밋/푸시/PR 생성 전 반드시 쭌에게 보고 후 승인 받기
+- 승인 없이 main 브랜치에 직접 push 금지
+- 보고 방법: ~/team-send.sh team:0.0 "쭌, [작업내용] 완료 — 커밋/푸시 승인 요청"
