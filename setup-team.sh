@@ -9,6 +9,7 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 SESSION="team"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 MEMBER_NAMES=("쭌" "민준" "지훈" "수아" "서연" "태양")
 MEMBER_MODELS=("claude-sonnet-4-6" "claude-opus-4-6" "claude-sonnet-4-6" "claude-sonnet-4-6" "claude-sonnet-4-6" "claude-sonnet-4-6")
@@ -72,11 +73,12 @@ CLAUDEEOF
 - 역할: 지시 수령 → 분석 → 팀원 배분 → 결과 통합 → 사용자에게 보고
 
 ## 팀원 역할 및 호출 방법
-- 민준 (아키텍트): 시스템 설계, 기술 스택 → tmux send-keys -t team:0.1 "민준, 내용" Enter
-- 지훈 (리서쳐): 기술 조사, 자료 수집 → tmux send-keys -t team:0.2 "지훈, 내용" Enter
-- 수아 (UI/UX): 화면 설계, 디자인 → tmux send-keys -t team:0.3 "수아, 내용" Enter
-- 서연 (개발자): 코드 작성, 구현 → tmux send-keys -t team:0.4 "서연, 내용" Enter
-- 태양 (QA): 코드 리뷰, 테스트 → tmux send-keys -t team:0.5 "태양, 내용" Enter
+반드시 ~/team-send.sh 스크립트 사용 (타이밍 문제로 직접 send-keys 금지)
+- 민준 (아키텍트): 시스템 설계, 기술 스택 → ~/team-send.sh team:0.1 "민준, 내용"
+- 지훈 (리서쳐): 기술 조사, 자료 수집 → ~/team-send.sh team:0.2 "지훈, 내용"
+- 수아 (UI/UX): 화면 설계, 디자인 → ~/team-send.sh team:0.3 "수아, 내용"
+- 서연 (개발자): 코드 작성, 구현 → ~/team-send.sh team:0.4 "서연, 내용"
+- 태양 (QA): 코드 리뷰, 테스트 → ~/team-send.sh team:0.5 "태양, 내용"
 
 ## 보고 규칙
 - 팀원에게서 결과 받으면 반드시 사용자에게 요약 보고
@@ -104,7 +106,7 @@ ROLEEOF
     cat > ~/.claude/roles/minjun.md << 'ROLEEOF'
 ## 나의 역할: 민준 (아키텍트)
 - 시스템 아키텍처 설계, 기술 스택 선정, API 설계, 성능 검토
-- 완료 후: tmux send-keys -t team:0.0 "쭌, 아키텍처 설계 완료: [요약]" Enter
+- 완료 후: ~/team-send.sh team:0.0 "쭌, 아키텍처 설계 완료: [요약]"
 
 ## Superpowers 스킬
 superpowers:brainstorming
@@ -114,7 +116,7 @@ ROLEEOF
     cat > ~/.claude/roles/jihun.md << 'ROLEEOF'
 ## 나의 역할: 지훈 (리서쳐)
 - 기술 조사, 레퍼런스 수집, 트렌드 분석
-- 완료 후: tmux send-keys -t team:0.0 "쭌, 리서치 완료: [요약]" Enter
+- 완료 후: ~/team-send.sh team:0.0 "쭌, 리서치 완료: [요약]"
 
 ## Superpowers 스킬
 superpowers:brainstorming
@@ -124,13 +126,13 @@ ROLEEOF
     cat > ~/.claude/roles/sua.md << 'ROLEEOF'
 ## 나의 역할: 수아 (UI/UX 디자이너)
 - 화면 설계, 컴포넌트 구조, 사용자 플로우 담당
-- 완료 후: tmux send-keys -t team:0.0 "쭌, 디자인 완료: [요약]" Enter
+- 완료 후: ~/team-send.sh team:0.0 "쭌, 디자인 완료: [요약]"
 ROLEEOF
 
     cat > ~/.claude/roles/seoyeon.md << 'ROLEEOF'
 ## 나의 역할: 서연 (개발자)
 - 프론트엔드/백엔드 구현, 코드 작성 및 수정
-- 완료 후: tmux send-keys -t team:0.0 "쭌, 개발 완료: [요약]" Enter
+- 완료 후: ~/team-send.sh team:0.0 "쭌, 개발 완료: [요약]"
 
 ## Superpowers 스킬
 superpowers:test-driven-development
@@ -140,7 +142,7 @@ ROLEEOF
     cat > ~/.claude/roles/taeyang.md << 'ROLEEOF'
 ## 나의 역할: 태양 (QA·리뷰어)
 - 코드 리뷰, 테스트, 버그 리포트
-- 완료 후: tmux send-keys -t team:0.0 "쭌, 리뷰 완료: [요약]" Enter
+- 완료 후: ~/team-send.sh team:0.0 "쭌, 리뷰 완료: [요약]"
 
 ## Superpowers 스킬
 superpowers:code-reviewer
@@ -162,11 +164,16 @@ fi
 echo "  ✅ tmux $(tmux -V | awk '{print $2}')"
 echo "  ✅ claude $(claude --version 2>/dev/null | head -1)"
 
-echo -e "\n${YELLOW}[1/4] CLAUDE.md 설정...${NC}"
+echo -e "\n${YELLOW}[1/4] 유틸리티 스크립트 설치...${NC}"
+cp "$SCRIPT_DIR/team-send.sh" ~/team-send.sh && chmod +x ~/team-send.sh
+cp "$SCRIPT_DIR/team-resize.sh" ~/team-resize.sh && chmod +x ~/team-resize.sh
+echo "  ✅ team-send.sh, team-resize.sh → ~/"
+
+echo -e "\n${YELLOW}[2/4] CLAUDE.md 설정...${NC}"
 echo "  ⚙️  역할 파일 생성 중..."
 setup_claude_md
 
-echo -e "\n${YELLOW}[2/4] TMUX 세션 & 레이아웃 구성...${NC}"
+echo -e "\n${YELLOW}[3/4] TMUX 세션 & 레이아웃 구성...${NC}"
 echo "  🖥️  tmux 세션 생성 중..."
 tmux kill-session -t "$SESSION" 2>/dev/null || true
 tmux new-session -d -s "$SESSION" -x 220 -y 50
@@ -189,7 +196,12 @@ tmux select-pane -t "$SESSION:0.4" -T "서연 개발자"
 tmux select-pane -t "$SESSION:0.5" -T "태양 QA·리뷰어"
 echo "  ✅ 레이아웃 구성 완료 (6 panes)"
 
-echo -e "\n${YELLOW}[3/4] Claude 병렬 실행 중...${NC}"
+echo "  ⚙️  tmux 자동 리사이즈 훅 설정 중..."
+tmux set-hook -g client-resized "run-shell ~/team-resize.sh"
+tmux set-hook -g after-resize-window "run-shell ~/team-resize.sh"
+echo "  ✅ 리사이즈 훅 등록 완료"
+
+echo -e "\n${YELLOW}[4/4] Claude 병렬 실행 중...${NC}"
 echo "  🤖  에이전트 6명 동시 실행 중..."
 for pane in 0 1 2 3 4 5; do
     start_claude_in_pane "$SESSION:0.$pane" "${MEMBER_MODELS[$pane]}" "${MEMBER_ROLES[$pane]}" &
@@ -197,7 +209,7 @@ done
 wait
 echo -e "${GREEN}  ✅ 전체 실행 완료${NC}"
 
-echo -e "\n${YELLOW}[4/4] 상태 확인...${NC}"
+echo -e "\n${YELLOW}[5/4] 상태 확인...${NC}"
 echo "  🔍  각 에이전트 준비 상태 점검 중..."
 sleep 3
 for pane in 0 1 2 3 4 5; do
