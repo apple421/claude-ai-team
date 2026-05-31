@@ -196,7 +196,8 @@ echo "  ✅ claude $(claude --version 2>/dev/null | head -1)"
 echo -e "\n${YELLOW}[1/4] 유틸리티 스크립트 설치...${NC}"
 cp "$SCRIPT_DIR/team-send.sh" ~/team-send.sh && chmod +x ~/team-send.sh
 cp "$SCRIPT_DIR/team-resize.sh" ~/team-resize.sh && chmod +x ~/team-resize.sh
-echo "  ✅ team-send.sh, team-resize.sh → ~/"
+cp "$SCRIPT_DIR/team-monitor.sh" ~/team-monitor.sh && chmod +x ~/team-monitor.sh
+echo "  ✅ team-send.sh, team-resize.sh, team-monitor.sh → ~/"
 
 echo -e "\n${YELLOW}[2/4] CLAUDE.md 설정...${NC}"
 echo "  ⚙️  역할 파일 생성 중..."
@@ -215,14 +216,16 @@ tmux select-layout -t "$SESSION:0" even-horizontal
 tmux select-layout -t "$SESSION:0" main-vertical
 tmux set-option -t "$SESSION" main-pane-width 80
 tmux set-option -t "$SESSION" pane-border-status top
-tmux set-option -t "$SESSION" pane-border-format " #{pane_title} "
+tmux set-option -t "$SESSION" pane-border-style 'fg=colour240'
+tmux set-option -t "$SESSION" pane-active-border-style 'fg=colour240'
+tmux set-option -t "$SESSION" pane-border-format "#{?#{m/r:^○,#{pane_title}},#[fg=colour1 bold],#[fg=colour4 bold]} #{pane_title} #[default]"
 tmux set-option -t "$SESSION" allow-rename off
-tmux select-pane -t "$SESSION:0.0" -T "쭌"
-tmux select-pane -t "$SESSION:0.1" -T "민준 아키텍트"
-tmux select-pane -t "$SESSION:0.2" -T "지훈 리서처"
-tmux select-pane -t "$SESSION:0.3" -T "수아 UI/UX디자이너"
-tmux select-pane -t "$SESSION:0.4" -T "서연 개발자"
-tmux select-pane -t "$SESSION:0.5" -T "태양 QA·리뷰어"
+tmux select-pane -t "$SESSION:0.0" -T "○ 팀장 쭌"
+tmux select-pane -t "$SESSION:0.1" -T "○ 아키텍트 민준"
+tmux select-pane -t "$SESSION:0.2" -T "○ 리서처 지훈"
+tmux select-pane -t "$SESSION:0.3" -T "○ 디자이너 수아"
+tmux select-pane -t "$SESSION:0.4" -T "○ 개발자 서연"
+tmux select-pane -t "$SESSION:0.5" -T "○ QA 태양"
 echo "  ✅ 레이아웃 구성 완료 (6 panes)"
 
 echo "  ⚙️  tmux 자동 리사이즈 훅 설정 중..."
@@ -252,5 +255,10 @@ echo "  ╔═══════════════════════
 echo "  ║   ✅ 팀 환경 구성 완료!              ║"
 echo "  ╚══════════════════════════════════════╝"
 echo -e "${NC}"
+echo "  ⚙️  상태 모니터 시작 중..."
+pkill -f team-monitor.sh 2>/dev/null || true
+nohup ~/team-monitor.sh > /tmp/team-monitor.log 2>&1 &
+echo "  ✅ team-monitor.sh 백그라운드 실행 완료"
+
 echo -e "${GREEN}🚀 완료! tmux attach -t team 으로 접속하세요${NC}"
 [ -t 1 ] && tmux attach -t "$SESSION"
