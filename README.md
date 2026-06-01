@@ -360,3 +360,5 @@ A. 한 번이라도 `claude` 명령을 실행하면 자동 생성됩니다. 그 
 - 팀 세션 종료: `tmux kill-session -t team`
 - 문의 및 기여: Issues 탭을 활용해주세요
 - GitHub: https://github.com/apple421/claude-ai-team
+- Notion 공유 허브: https://www.notion.so/Claude-AI-Team-36e55f903abe8027a353e15649c4d676
+- Notion 상세 페이지: https://www.notion.so/Claude-AI-Team-36e55f903abe81b29512f6cec5a70ce9
