@@ -258,7 +258,53 @@ tmux attach -t team
 
 ---
 
-## 비용 안내
+### Triple Crown — 기능 하나를 처음부터 끝까지 자동 실행
+
+`triple-crown.sh`는 기능 이름 하나를 넘기면 **전략 수립 → 설계+조사 → 구현 → 검증 → 배포** 5단계를 자동으로 순서대로 실행합니다.
+
+```bash
+~/triple-crown.sh "로그인 화면"
+```
+
+실행 흐름:
+
+```
+Phase 1: 쭌 — /cso + /autoplan 으로 전략 수립
+Phase 2: 민준(구조화) + 지훈(기술 조사) — 병렬 실행
+Phase 3: 서연(TDD 구현) + 수아(UI 구현) — 병렬 실행
+Phase 4: 태양(/review + /qa) + 민준(/gsd:validate-phase) — 병렬 실행
+Phase 5: 쭌 — /ship 으로 배포
+```
+
+> 각 Phase 사이에 대기 시간이 있습니다. 복잡한 기능은 Phase별 완료를 확인하며 수동 진행을 권장합니다.
+
+---
+
+### 팀 상태 확인
+
+```bash
+~/team-status.sh
+```
+
+각 pane의 최근 출력 3줄을 한눈에 확인합니다. 에이전트가 응답 중인지, 멈춰있는지 빠르게 체크할 때 유용합니다.
+
+---
+
+## 5. GitHub Actions (CI/CD)
+
+레포에는 세 가지 워크플로우가 포함되어 있습니다. Telegram 알림을 받으려면 레포 **Settings → Secrets**에 `TELEGRAM_BOT_TOKEN`과 `TELEGRAM_CHAT_ID`를 등록하세요.
+
+| 워크플로우 | 트리거 | 역할 |
+|-----------|--------|------|
+| `ci.yml` | push / PR | `setup-team.sh`, `triple-crown.sh`, `team-status.sh` bash 문법 검사 + shellcheck |
+| `conflict-check.yml` | PR → main | main 브랜치와 충돌 여부 자동 감지 |
+| `daily-report.yml` | 매일 09:00 KST | 커밋 수, 열린 PR/이슈 현황을 Telegram으로 보고 |
+
+Telegram 미사용 시 알림 step은 무시되며 나머지 검증은 정상 동작합니다.
+
+---
+
+## 6. 비용 안내
 
 > API 크레딧 기반 과금 — 에이전트가 실제로 토큰을 소비할 때만 청구됩니다. 대기 중에는 비용이 발생하지 않습니다.
 
@@ -274,7 +320,7 @@ tmux attach -t team
 
 ---
 
-## 자주 묻는 질문 (FAQ)
+## 7. 자주 묻는 질문 (FAQ)
 
 **Q. API 키를 잃어버렸어요.**
 A. console.anthropic.com → API Keys에서 기존 키를 삭제하고 새로 발급받으세요.
@@ -303,10 +349,14 @@ A. 한 번이라도 `claude` 명령을 실행하면 자동 생성됩니다. 그 
 
 ---
 
-## 참고
+## 8. 참고
 
 - 각 에이전트 역할 설정: `~/.claude-roles/<role>/CLAUDE.md` (예: `~/.claude-roles/jun/CLAUDE.md`)
 - 역할 커스터마이징: [`roles/README.md`](roles/README.md)
+- 5단계 자동 실행: `triple-crown.sh <기능명>`
+- 팀 상태 확인: `team-status.sh`
+- 일일 로그 템플릿: [`memory/TEMPLATE.md`](memory/TEMPLATE.md)
+- CI/CD 워크플로우: [`.github/workflows/`](.github/workflows/)
 - 팀 세션 종료: `tmux kill-session -t team`
 - 문의 및 기여: Issues 탭을 활용해주세요
 - GitHub: https://github.com/apple421/claude-ai-team
