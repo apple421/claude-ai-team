@@ -206,7 +206,9 @@ setup_claude_md
 echo -e "\n${YELLOW}[3/4] TMUX 세션 & 레이아웃 구성...${NC}"
 echo "  🖥️  tmux 세션 생성 중..."
 tmux kill-session -t "$SESSION" 2>/dev/null || true
-tmux new-session -d -s "$SESSION" -x 220 -y 50
+TERM_COLS=$(tput cols 2>/dev/null); TERM_COLS=${TERM_COLS:-220}
+TERM_ROWS=$(tput lines 2>/dev/null); TERM_ROWS=${TERM_ROWS:-50}
+tmux new-session -d -s "$SESSION" -x "$TERM_COLS" -y "$TERM_ROWS"
 tmux split-window -t "$SESSION:0.0" -h
 tmux split-window -t "$SESSION:0.1" -h
 tmux split-window -t "$SESSION:0.2" -h
