@@ -102,6 +102,20 @@ chmod +x setup-team.sh
 
 `setup-team.sh`는 `team`이라는 이름의 tmux 세션을 생성하고, 6개의 pane에 에이전트를 배치한 뒤 역할 파일을 로드합니다. 완료되면 자동으로 세션에 접속됩니다.
 
+**편의 alias 등록 (권장)**
+
+`~/.zshrc`에 아래를 추가하면 `team` / `toff` 명령으로 간편하게 시작·종료할 수 있습니다:
+
+```bash
+# 팀 시작 (세션 있으면 접속, 없으면 새로 생성) — 종료 시 터미널 자동 닫힘
+alias team='{ tmux has-session -t team 2>/dev/null && tmux attach -t team || bash ~/claude-ai-team/setup-team.sh; }; exit'
+
+# 팀 종료
+alias toff='bash ~/team-stop.sh'
+```
+
+> 적용: `source ~/.zshrc`
+
 > **`.tmux.conf` 자동 적용**: `setup-team.sh`가 레포의 `.tmux.conf`를 `~/.tmux.conf`로 복사합니다. 마우스 스크롤, pane 크기 자동 조정 등 편의 설정이 포함되어 있으며, tmux-resurrect 플러그인이 없어도 에러 없이 동작합니다.
 
 **실행 결과 예시:**
