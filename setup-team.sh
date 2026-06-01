@@ -217,15 +217,15 @@ tmux select-layout -t "$SESSION:0" main-vertical
 tmux set-option -t "$SESSION" main-pane-width 80
 tmux set-option -t "$SESSION" pane-border-status top
 tmux set-option -t "$SESSION" pane-border-style 'fg=colour240'
-tmux set-option -t "$SESSION" pane-active-border-style 'fg=colour240'
-tmux set-option -t "$SESSION" pane-border-format "#{?#{m/r:^○,#{pane_title}},#[fg=colour1 bold],#[fg=colour4 bold]} #{pane_title} #[default]"
+tmux set-option -t "$SESSION" pane-active-border-style 'fg=colour33'
+tmux set-option -t "$SESSION" pane-border-format "#{?#{m/r:^✳,#{pane_title}},#[fg=colour240],#[fg=colour33 bold]} #{?#{==:#{pane_index},0},쭌 (팀장),#{?#{==:#{pane_index},1},민준 (아키텍트),#{?#{==:#{pane_index},2},지훈 (리서처),#{?#{==:#{pane_index},3},수아 (UI/UX),#{?#{==:#{pane_index},4},서연 (개발자),태양 (QA)}}}}} #{?#{m/r:^✳,#{pane_title}},○ 대기중,● 작업중} #[default]"
 tmux set-option -t "$SESSION" allow-rename off
-tmux select-pane -t "$SESSION:0.0" -T "○ 팀장 쭌"
-tmux select-pane -t "$SESSION:0.1" -T "○ 아키텍트 민준"
-tmux select-pane -t "$SESSION:0.2" -T "○ 리서처 지훈"
-tmux select-pane -t "$SESSION:0.3" -T "○ 디자이너 수아"
-tmux select-pane -t "$SESSION:0.4" -T "○ 개발자 서연"
-tmux select-pane -t "$SESSION:0.5" -T "○ QA 태양"
+tmux select-pane -t "$SESSION:0.0" -T "✳ 팀장-쭌"
+tmux select-pane -t "$SESSION:0.1" -T "✳ 아키텍트-민준"
+tmux select-pane -t "$SESSION:0.2" -T "✳ 리서처-지훈"
+tmux select-pane -t "$SESSION:0.3" -T "✳ 디자이너-수아"
+tmux select-pane -t "$SESSION:0.4" -T "✳ 개발자-서연"
+tmux select-pane -t "$SESSION:0.5" -T "✳ QA-태양"
 echo "  ✅ 레이아웃 구성 완료 (6 panes)"
 
 echo "  ⚙️  tmux 자동 리사이즈 훅 설정 중..."
