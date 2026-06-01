@@ -219,8 +219,8 @@ tmux select-layout -t "$SESSION:0" main-vertical
 tmux set-option -t "$SESSION" main-pane-width 80
 tmux set-option -t "$SESSION" pane-border-status top
 tmux set-option -t "$SESSION" pane-border-style 'fg=colour240'
-tmux set-option -t "$SESSION" pane-active-border-style 'fg=colour33'
-tmux set-option -t "$SESSION" pane-border-format "#{?#{m/r:^✳,#{pane_title}},#[fg=colour240],#[fg=colour33 bold]} #{?#{==:#{pane_index},0},쭌 (팀장),#{?#{==:#{pane_index},1},민준 (아키텍트),#{?#{==:#{pane_index},2},지훈 (리서처),#{?#{==:#{pane_index},3},수아 (UI/UX),#{?#{==:#{pane_index},4},서연 (개발자),태양 (QA)}}}}} #{?#{m/r:^✳,#{pane_title}},○ 대기중,● 작업중} #[default]"
+tmux set-option -t "$SESSION" pane-active-border-style 'fg=colour255'
+tmux set-option -t "$SESSION" pane-border-format " #{?#{==:#{pane_index},0},#[fg=colour220 bold],#{?#{==:#{pane_index},1},#[fg=colour51 bold],#{?#{==:#{pane_index},2},#[fg=colour46 bold],#{?#{==:#{pane_index},3},#[fg=colour213 bold],#{?#{==:#{pane_index},4},#[fg=colour75 bold],#[fg=colour208 bold]}}}}}#{?#{==:#{pane_index},0},쭌 (팀장),#{?#{==:#{pane_index},1},민준 (아키텍트),#{?#{==:#{pane_index},2},지훈 (리서처),#{?#{==:#{pane_index},3},수아 (UI/UX),#{?#{==:#{pane_index},4},서연 (개발자),태양 (QA)}}}}}} #{?#{m/r:^✳,#{pane_title}},#[fg=colour240 nobold]○ 대기중,#[fg=colour255 nobold]● 작업중}#[default]"
 tmux set-option -t "$SESSION" allow-rename off
 tmux select-pane -t "$SESSION:0.0" -T "✳ 팀장-쭌"
 tmux select-pane -t "$SESSION:0.1" -T "✳ 아키텍트-민준"
